@@ -32,7 +32,9 @@ import { FileSizePipe } from './pipes/file-size.pipe';
   ],
   providers: [
     ApiService,
-    DataService
+    DataService,
+    FilesFilterPipe,
+    FoldersFilterPipe
   ],
   bootstrap: [AppComponent]
 })

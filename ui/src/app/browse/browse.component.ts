@@ -1,6 +1,8 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { DataService, FileInfo } from '../services/data.service';
+import { FilesFilterPipe } from '../pipes/files-filter.pipe';
+import { FoldersFilterPipe } from '../pipes/folders-filter.pipe';
 import { Subscription } from 'rxjs';
 import { distinctUntilChanged } from 'rxjs/operators';
 
@@ -21,16 +23,21 @@ export class BrowseComponent implements OnInit, OnDestroy {
   path: string;
   paths: PathType[];
   currentPathSub: Subscription;
+  foldersLen: number;
+  filesLen: number;
 
   constructor(
     public dataService: DataService,
-    public router: Router
+    public router: Router,
+    public filesFilter: FilesFilterPipe,
+    public foldersFilter: FoldersFilterPipe
   ) { }
 
   ngOnInit() {
     this.filesSub = this.dataService.files$.subscribe(files => {
-      this.files = (files || [])
-        .sort((a, b) => a.filename.localeCompare(b.filename));
+      this.files = (files || []).sort((a, b) => a.filename.localeCompare(b.filename));
+      this.foldersLen = this.foldersFilter.transform(this.files, this.showHidden).length;
+      this.filesLen = this.filesFilter.transform(this.files, this.showHidden).length;
     });
 
     this.currentPathSub = this.dataService.currentPath$
