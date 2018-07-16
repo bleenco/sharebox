@@ -1,0 +1,84 @@
+$cyan: lighten($blue, 20)
+$cyan-secondary: lighten($blue, 10)
+
+.icon-folder
+  position: relative
+  display: inline-block
+  text-align: center
+  width: 70px
+  height: 45px
+  border-radius: 0 6px 6px 6px
+  margin-top: 8px
+  background-color: $cyan
+
+  &:before
+    content: ''
+    display: block
+    position: absolute
+    top: -8px
+    left: 0
+    width: 32px
+    height: 8px
+    border-radius: 6px 0 0 0
+    background-color: $cyan-secondary
+
+  &:after
+    content: ''
+    position: absolute
+    display: block
+    width: 0
+    height: 0
+    top: -16px
+    left: 24px
+    border: 8px solid transparent
+    border-bottom-color: $cyan-secondary
+
+  span, i
+    position: absolute
+    top: 50%
+    left: 50%
+    transform: translate(-50%, -50%)
+    background-color: $cyan-secondary
+    color: $white
+
+  span
+    font-size: 12px
+    padding: 2px 8px
+    border-radius: 15px
+    white-space: nowrap
+
+  i
+    font-size: 37px
+    color: $cyan-secondary
+
+.icon-file
+  position: relative
+  width: 70px
+  height: 90px
+  margin: auto 20px
+  background-color: #FF7E5A
+  overflow: hidden
+  border-radius: 5px 0 5px 5px
+
+  &:before
+    content: ''
+    position: absolute
+    top: 0
+    right: 0
+    border-width: 12px
+    border-style: solid
+    border-color: $background-item $background-item #E24018 #E24018
+    border-radius: 0 0 0 5px
+    background: #FF7E5A
+    display: block
+
+  span
+    position: absolute
+    bottom: 5px
+    right: 5px
+    background-color: $background-item
+    color: $black
+    border-radius: 15px
+    white-space: nowrap
+    padding: 2px 8px
+    font-size: 12px

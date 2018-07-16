@@ -1,0 +1,28 @@
+@charset 'utf8'
+
+@import '../../node_modules/bulma/sass/base/minireset'
+@import '../../node_modules/bulma/sass/utilities/all'
+@import '../../node_modules/bulma/sass/elements/container'
+@import '../../node_modules/bulma/sass/grid/columns'
+@import 'variables'
+@import 'typography'
+@import 'colours'
+@import 'common'
+@import 'main'
+@import 'icons'
+
+html, body
+  background: $background
+  color: $text-primary
+  font-family: $font-family-regular
+  font-size: 14px
+  -webkit-font-smoothing: antialiased
+  -webkit-tap-highlight-color: transparent
+
+  a
+    text-decoration: none
+    cursor: pointer
+    color: $text-secondary
+
+    &:hover, &.is-active
+      color: $blue
