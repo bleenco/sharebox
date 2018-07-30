@@ -28,6 +28,7 @@ export class DataService {
   navigateSub: Subscription;
   filesSub: Subscription;
   files$: Subject<FileInfo[]>;
+  fetching: boolean;
 
   constructor(public apiService: ApiService, public router: Router) {
     this.currentPath$ = new BehaviorSubject<string>('init');
@@ -57,20 +58,13 @@ export class DataService {
         }
 
         this.currentPath$.next(event.url);
+        this.fetching = true;
         this.filesSub = this.apiService
           .getFiles(event.url.replace('/browse', ''))
-          .subscribe(files => this.files$.next(files.data));
-      });
-  }
-
-  fetchFiles(): void {
-    const sub = this.currentPath$
-      .pipe(
-        mergeMap(path => this.apiService.getFiles(path.replace('/browse', ''))),
-        map(files => this.files$.next(files.data))
-      )
-      .subscribe(() => {
-        sub.unsubscribe();
+          .subscribe(files => {
+            this.files$.next(files.data);
+            this.fetching = false;
+          });
       });
   }
 

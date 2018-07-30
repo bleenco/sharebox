@@ -1,0 +1,19 @@
+<div class="selectbox-container" (click)="toggle()">
+  <span class="selectbox-value">
+    <span>{{ innerValue }}</span>
+    <svg width="44px" height="28px" viewBox="0 0 44 28" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+      <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g transform="translate(-28.000000, 0.000000)" fill="#646464" fill-rule="nonzero">
+          <polygon points="28.7 5 33 0.8 50 18.5 67 0.8 71.3 5 50 27.2"></polygon>
+        </g>
+      </g>
+    </svg>
+  </span>
+  <div class="selectbox-options-container" *ngIf="isOpened">
+    <div class="selectbox-options">
+      <div class="selectbox-option" *ngFor="let val of values; let i = index" (click)="value = val" [class.is-active]="values[i] === innerValue">
+        <span>{{ val }}</span>
+      </div>
+    </div>
+  </div>
+</div>

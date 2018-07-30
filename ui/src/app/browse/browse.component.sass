@@ -3,8 +3,11 @@
 @import 'variables'
 
 .path-nav
-  display: block
-  padding-bottom: 10px
+  display: flex
+  align-items: center
+  padding: 10px
+  border: 1px solid $border-primary
+  background: $background-item
 
   span
     display: inline-block
@@ -18,6 +21,16 @@
 
     &:hover
       color: $blue
+
+.actions-bar
+  display: flex
+  justify-content: flex-end
+  width: 100%
+  margin: 10px 0
+
+  button:not(:last-child)
+    margin-right: 5px
+
 
 .folder-item
   +unselectable
@@ -59,14 +72,11 @@
   +unselectable
   width: 100%
   height: 200px
-  border-radius: 4px
-  border: 2px solid $border-primary
+  border: 1px solid $border-primary
 
   .file-item-icon
     width: 100%
     height: 145px
-    border-top-left-radius: 4px
-    border-top-right-radius: 4px
     background: $background-item
     display: flex
     align-items: center
@@ -74,14 +84,12 @@
 
   .file-item-text
     width: 100%
-    height: calc(55px - 4px)
-    border-bottom-left-radius: 4px
-    border-bottom-right-radius: 4px
+    height: calc(55px - 2px)
     background: $white
     display: flex
     align-items: center
     justify-content: flex-start
-    border-top: 2px solid $border-primary
+    border-top: 1px solid $border-primary
     color: $text-secondary
     font-family: $font-family-medium
 
@@ -114,13 +122,29 @@
     .file-item-text
       border-color: lighten($blue, 20)
 
-.go-back
+.list-item
+  border: 1px solid transparent
 
-  svg
-    width: 32px
-    height: 32px
+  .columns
 
-    &:hover
+    .column
+      display: flex
+      align-items: center
+      padding: 5px
 
-      g
-        fill: $blue
+  .list-item-icon-container
+    width: 35px
+    height: 20px
+    display: inline-flex
+    align-items: center
+    justify-content: center
+
+  .list-item-icon
+    width: auto
+    height: 20px
+    margin: 0 10px 0 0
+    padding: 0
+
+  &:hover
+    cursor: pointer
+    border-color: $border-primary

@@ -2,26 +2,45 @@
 
 
 [[projects]]
+  digest = "1:ccfa094742ce1c97fd3f6481e1bf98f3d9862510eee2bc0eb56e2745396bd330"
   name = "github.com/julienschmidt/httprouter"
   packages = ["."]
+  pruneopts = "UT"
   revision = "8c199fb6259ffc1af525cc3ad52ee60ba8359669"
   version = "v1.1"
 
 [[projects]]
-  name = "github.com/rs/cors"
-  packages = ["."]
-  revision = "ca016a06a5753f8ba03029c0aa5e54afb1bf713f"
-  version = "v1.4.0"
+  branch = "master"
+  digest = "1:b904229c9c8922ab8aaa80538c2e9099021bd00d846e6845828872f8107e6e45"
+  name = "github.com/phyber/negroni-gzip"
+  packages = ["gzip"]
+  pruneopts = "UT"
+  revision = "ef6356a5d02936b65ca8e60b604ed6b078aac8d3"
 
 [[projects]]
+  digest = "1:0b8dd7447e420afff0260179dc892711e837edd1d446bc78dab924624a3c3c81"
+  name = "github.com/rs/cors"
+  packages = ["."]
+  pruneopts = "UT"
+  revision = "3fb1b69b103a84de38a19c3c6ec073dd6caa4d3f"
+  version = "v1.5.0"
+
+[[projects]]
+  digest = "1:606d068450c82b9ddaa21de992f73563754077f0f411235cdfe71d0903a268c3"
   name = "github.com/urfave/negroni"
   packages = ["."]
+  pruneopts = "UT"
   revision = "5dbbc83f748fc3ad38585842b0aedab546d0ea1e"
   version = "v0.3.0"
 
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "6ad2b152756cf99b3c166320fac41ea5fa2dc63f944944f3db691809fd04c3f2"
+  input-imports = [
+    "github.com/julienschmidt/httprouter",
+    "github.com/phyber/negroni-gzip/gzip",
+    "github.com/rs/cors",
+    "github.com/urfave/negroni",
+  ]
   solver-name = "gps-cdcl"
   solver-version = 1

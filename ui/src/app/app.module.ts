@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -14,6 +15,8 @@ import { HeaderComponent } from './header/header.component';
 import { FilesFilterPipe } from './pipes/files-filter.pipe';
 import { FoldersFilterPipe } from './pipes/folders-filter.pipe';
 import { FileSizePipe } from './pipes/file-size.pipe';
+import { LoaderComponent } from './loader/loader.component';
+import { SelectboxComponent } from './widgets/selectbox/selectbox.component';
 
 @NgModule({
   declarations: [
@@ -22,11 +25,14 @@ import { FileSizePipe } from './pipes/file-size.pipe';
     HeaderComponent,
     FilesFilterPipe,
     FoldersFilterPipe,
-    FileSizePipe
+    FileSizePipe,
+    LoaderComponent,
+    SelectboxComponent
   ],
   imports: [
     BrowserModule,
     CommonModule,
+    FormsModule,
     HttpClientModule,
     AppRoutingModule
   ],

@@ -1,0 +1,74 @@
+@import 'colours'
+@import 'variables'
+@import 'typography'
+
+.selectbox-container
+  display: flex
+  align-items: center
+  width: 120px
+  height: 30px
+  font-size: 12px
+  position: relative
+  cursor: pointer
+  float: left
+  clear: both
+  font-family: $font-family-medium
+  justify-content: center
+
+  svg
+    width: 12px
+    height: auto
+    position: absolute
+    right: 10px
+    top: 11px
+
+  .selectbox-value
+    width: 120px
+    padding: 6px 13px
+    font-size: 12px
+    height: 30px
+    border: 1px solid $border-secondary
+    color: $text-primary
+    display: inline-flex
+    align-items: center
+    position: relative
+    justify-content: center
+
+  .selectbox-options-container
+    position: absolute
+    display: inline-block
+    top: 32px
+    width: 100%
+    min-height: 30px
+    left: 0
+    right: 0
+    z-index: 9
+
+  .selectbox-options
+    width: 100%
+    background: $background
+    border: 1px solid $border-secondary
+    min-height: 30px
+    border-bottom-left-radius: 3px
+    border-bottom-right-radius: 3px
+
+    .selectbox-option
+      display: flex
+      width: 100%
+      height: 30px
+      align-items: center
+      padding: 6px 13px
+      position: relative
+      justify-content: center
+
+      .check-icon
+        position: absolute
+        color: $blue
+        width: 15px
+        height: 15px
+        top: 15px
+        right: 10px
+
+      &:hover, &.is-active
+        background: $background
+        color: $blue

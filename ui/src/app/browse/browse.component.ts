@@ -25,6 +25,7 @@ export class BrowseComponent implements OnInit, OnDestroy {
   currentPathSub: Subscription;
   foldersLen: number;
   filesLen: number;
+  view: 'Grid View' | 'List View' = 'Grid View';
 
   constructor(
     public dataService: DataService,
