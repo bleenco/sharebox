@@ -26,6 +26,9 @@
           <button type="button" class="button is-small">
             <span>Move</span>
           </button>
+          <button type="button" class="button is-small">
+            <span>Copy</span>
+          </button>
           <app-selectbox [values]="['Grid View', 'List View']" [(ngModel)]="view" name="view"></app-selectbox>
         </div>
 
@@ -83,22 +86,6 @@
           </div>
           <div class="content-section" *ngIf="!foldersLen && !filesLen">
             <h1 class="has-text-centered">Empty folder.</h1>
-            <p class="has-text-centered" *ngIf="paths.length > 1">
-              <a (click)="changeAbsolutePath(paths.length - 2)" class="go-back">
-                <svg width="60px" height="60px" viewBox="0 0 60 60" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-                  <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                    <g transform="translate(-21.000000, 0.000000)" fill="#000000" fill-rule="nonzero">
-                      <g id="Group" transform="translate(21.000000, 0.000000)">
-                        <path d="M29.6,59.3 C13.3,59.3 0.1,46.1 0.1,29.8 C0.1,13.5 13.3,0.3 29.6,0.3 C45.9,0.3 59.1,13.5 59.1,29.8 C59.1,46.1 45.8,59.3 29.6,59.3 Z M29.6,2.7 C14.7,2.7 2.6,14.8 2.6,29.7 C2.6,44.6 14.7,56.7 29.6,56.7 C44.5,56.7 56.6,44.6 56.6,29.7 C56.6,14.8 44.5,2.7 29.6,2.7 Z"
-                          id="Shape"></path>
-                        <path d="M43.5,27.9 L21.1,27.9 L28.5,20.5 C29.1,19.9 29.1,18.8 28.5,18.2 C27.9,17.6 26.8,17.6 26.2,18.2 L16.7,27.7 C15.7,28.7 15.7,30.3 16.7,31.3 L26.2,40.8 C26.5,41.1 26.9,41.3 27.4,41.3 C27.9,41.3 28.2,41.1 28.6,40.8 C29.2,40.2 29.2,39.1 28.6,38.5 L21.2,31.1 L43.5,31.1 C44.4,31.1 45.1,30.4 45.1,29.5 C45.1,28.6 44.4,27.9 43.5,27.9 Z"
-                          id="Shape"></path>
-                      </g>
-                    </g>
-                  </g>
-                </svg>
-              </a>
-            </p>
           </div>
         </div>
 

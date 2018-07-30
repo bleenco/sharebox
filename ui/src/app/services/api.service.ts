@@ -44,7 +44,7 @@ export class ApiService {
 
   private getURL(): string {
     const secure = location.protocol === 'https:' ? true : false;
-    const port = location.port === '4200' || location.port === '4505' ? '4505' : '';
+    const port = location.port === '4200' || location.port === '4505' ? '4505' : location.port;
     return secure ? `https://${location.hostname}:${port}/api` : `http://${location.hostname}:${port}/api`;
   }
 }

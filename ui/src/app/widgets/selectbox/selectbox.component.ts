@@ -17,6 +17,7 @@ export class SelectboxComponent implements ControlValueAccessor, OnInit {
 
   constructor(private elementRef: ElementRef) { }
 
+  private onTouchedCallback: () => void = () => { };
   private onChangeCallback: (_: any) => void = () => { };
 
   get value(): string {
