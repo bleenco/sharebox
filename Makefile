@@ -33,4 +33,7 @@ install:
 	go get -u github.com/cespare/reflex
 	cd ui && npm install
 
-.PHONY: checkdir build dist install
+clean:
+	@rm -rf dist/ build/
+
+.PHONY: checkdir build dist install clean
