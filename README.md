@@ -13,6 +13,22 @@ For sharing over the internet, it has included [vex](https://github.com/bleenco/
 sharebox -dir /home/bleenco/Videos
 ```
 
+### Using vex tunnels
+
+You would like to use `-vex` parameter if your machine is running behind firewall or NAT.
+This can also come handy if you don't want to expose your public IP.
+
+```sh
+sharebox -vex
+```
+
+Sample generated URL:
+
+```sh
+Serving files from ./ at 0.0.0.0:4505 ...
+[vexd] Generated URL: https://6a197324.bleenco.space
+```
+
 ### Help
 
 For complete command line usage, please see
