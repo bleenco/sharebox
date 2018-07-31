@@ -15,6 +15,13 @@
   background: $white
   margin-left: 5px
 
+  &[disabled]
+    opacity: .5
+    cursor: not-allowed
+    color: $text-primary !important
+    border-color: $border-secondary !important
+    background: $white !important
+
   &:hover, &.is-active
     border-color: $blue
     color: $blue
@@ -55,6 +62,22 @@
 
     &:hover, &.is-active
       background: $green
+      color: $white
+
+    &.is-inverted
+      background: $green
+      color: $white
+
+  &.is-red
+    color: $red
+    border-color: $red
+
+    &:hover, &.is-active
+      background: $red
+      color: $white
+
+    &.is-inverted
+      background: $red
       color: $white
 
   i

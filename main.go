@@ -44,6 +44,7 @@ func main() {
 	router.GET("/api/files/download-zip", filemanager.DownloadZipHandler)
 	router.POST("/api/files/upload", filemanager.UploadHandler)
 	router.POST("/api/files/delete", filemanager.DeleteHandler)
+	router.POST("/api/files/folder/create", filemanager.CreateFolderHandler)
 
 	router.NotFound = http.FileServer(&AssetFS{
 		Asset:     Asset,

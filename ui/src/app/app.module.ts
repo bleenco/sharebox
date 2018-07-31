@@ -20,6 +20,7 @@ import { FoldersFilterPipe } from './pipes/folders-filter.pipe';
 import { FileSizePipe } from './pipes/file-size.pipe';
 import { LoaderComponent } from './loader/loader.component';
 import { SelectboxComponent } from './widgets/selectbox/selectbox.component';
+import { CreateFolderDialogComponent } from './dialogs/create-folder-dialog/create-folder-dialog.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { SelectboxComponent } from './widgets/selectbox/selectbox.component';
     FoldersFilterPipe,
     FileSizePipe,
     LoaderComponent,
-    SelectboxComponent
+    SelectboxComponent,
+    CreateFolderDialogComponent
   ],
   imports: [
     BrowserModule,

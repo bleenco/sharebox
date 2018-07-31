@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { ApiService } from './api.service';
-import { Subject, BehaviorSubject, Subscription } from 'rxjs';
-import { distinctUntilChanged, filter, flatMap, tap } from 'rxjs/operators';
+import { Subject, BehaviorSubject, Subscription, Observable } from 'rxjs';
+import { distinctUntilChanged, filter } from 'rxjs/operators';
 
 export interface FileInfo {
   filename: string;
@@ -24,11 +24,13 @@ export interface FileInfo {
 })
 export class DataService {
   currentPath$: BehaviorSubject<string>;
+  currentPath: string;
   currentPathSub: Subscription;
   navigateSub: Subscription;
   filesSub: Subscription;
   files$: Subject<FileInfo[]>;
   fetching: boolean;
+  createFolderDialog: boolean;
 
   constructor(public apiService: ApiService, public router: Router) {
     this.currentPath$ = new BehaviorSubject<string>('init');
@@ -57,6 +59,7 @@ export class DataService {
           this.filesSub.unsubscribe();
         }
 
+        this.currentPath = event.url.replace('/browse', '');
         this.currentPath$.next(event.url);
         this.fetching = true;
         this.filesSub = this.apiService
@@ -69,16 +72,12 @@ export class DataService {
   }
 
   refresh(): void {
-    const sub = this.currentPath$
-      .pipe(
-        tap(() => this.fetching = true),
-        flatMap(path => this.apiService.getFiles(path.replace('/browse', '')))
-      )
+    this.fetching = true;
+    this.apiService.getFiles(this.currentPath)
       .subscribe(files => {
-        this.fetching = false;
         this.files$.next(files.data);
         this.fetching = false;
-      }, err => console.error(err), () => sub.unsubscribe());
+      });
   }
 
   downloadFile(filePath: string): void {
@@ -87,5 +86,9 @@ export class DataService {
 
   downloadZipArchive(filePaths: string[]): void {
     this.apiService.downloadZipArchive(filePaths);
+  }
+
+  createFolder(filePath: string): Observable<any> {
+    return this.apiService.createFolder(filePath);
   }
 }

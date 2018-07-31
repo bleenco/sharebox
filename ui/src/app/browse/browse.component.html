@@ -33,7 +33,7 @@
           <button type="button" class="button is-small is-gray" *ngIf="selectedItems?.length">
             <span>Copy</span>
           </button>
-          <button type="button" class="button is-small is-gray">
+          <button type="button" class="button is-small is-gray" (click)="dataService.createFolderDialog = true;">
             <span>Create Folder</span>
           </button>
           <app-selectbox [values]="['Grid View', 'List View']" [(ngModel)]="view" name="view"></app-selectbox>
@@ -46,7 +46,7 @@
         </div>
 
         <div class="content" *ngIf="!dataService.fetching && view === 'Grid View'">
-          <dts-select-container #container="dts-select-container" [(selectedItems)]="selectedItems" (select)="onSelect($event)">
+          <dts-select-container [(selectedItems)]="selectedItems" [selectMode]="false" [selectWithShortcut]="true" (select)="onSelect($event)">
             <div class="content-section" *ngIf="foldersLen || paths.length > 1">
               <h1>Folders</h1>
               <div class="columns is-multiline">
@@ -61,7 +61,7 @@
                   </div>
                 </div>
                 <div class="column is-3" *ngFor="let folder of files | foldersFilter:showHidden">
-                  <div class="folder-item" (click)="changePath(folder.filename)" [dtsSelectItem]="folder">
+                  <div class="folder-item" (click)="changePath($event, folder.filename)" [dtsSelectItem]="folder">
                     <div class="folder-item-icon">
                       <span class="icon-folder"></span>
                     </div>
@@ -111,7 +111,7 @@
                   </div>
                 </div>
               </div>
-              <div class="list-item" *ngFor="let folder of files | foldersFilter:showHidden" (click)="changePath(folder.filename)" [dtsSelectItem]="folder">
+              <div class="list-item" *ngFor="let folder of files | foldersFilter:showHidden" (click)="changePath($event, folder.filename)" [dtsSelectItem]="folder">
                 <div class="columns is-paddingless is-marginless">
                   <div class="column is-12">
                     <span>
@@ -150,3 +150,5 @@
     </div>
   </div>
 </div>
+
+<app-create-folder-dialog *ngIf="dataService?.createFolderDialog"></app-create-folder-dialog>

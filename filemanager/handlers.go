@@ -92,6 +92,43 @@ func DownloadZipHandler(w http.ResponseWriter, r *http.Request, ps httprouter.Pa
 	http.ServeContent(w, r, zipFile.Name(), time.Now(), bytes.NewReader(downloadBytes))
 }
 
+// CreateFolderHandler creates folder and returns status response
+func CreateFolderHandler(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
+	type createFolderType struct {
+		FilePath string `json:"filePath"`
+	}
+	var form createFolderType
+	decoder := json.NewDecoder(r.Body)
+	if err := decoder.Decode(&form); err != nil {
+		fmt.Println(err)
+	}
+
+	folderName := form.FilePath
+	folderPath := path.Clean(root + "/" + folderName)
+
+	if fileExists(folderPath) {
+		for ok := true; ok; ok = fileExists(folderPath) {
+			extension := filepath.Ext(folderName)
+			foldernameWithoutExt := folderName[0 : len(folderName)-len(extension)]
+			folderName = foldernameWithoutExt + "-" + buildFileName() + extension
+			folderPath = path.Clean(root + "/" + folderName)
+		}
+	}
+
+	var data JSONResponse
+	if err := os.MkdirAll(folderPath, 0755); err != nil {
+		data.Status = http.StatusInternalServerError
+		data.Data = err.Error()
+	} else {
+		data.Status = http.StatusOK
+		data.Data = "Folder succesfully created"
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	w.WriteHeader(http.StatusOK)
+	json.NewEncoder(w).Encode(data)
+}
+
 // UploadHandler reads a file from HTTP request and save it to disk
 func UploadHandler(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 	const _24K = (1 << 10) * 24

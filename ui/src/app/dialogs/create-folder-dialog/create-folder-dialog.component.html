@@ -1,0 +1,23 @@
+<div class="dialog-overlay">
+  <div class="dialog-container">
+    <div class="dialog-header">
+      <h1>Create Folder</h1>
+      <img src="/assets/images/close-icon.svg" class="close-icon" (click)="dataService.createFolderDialog = false;">
+    </div>
+    <div class="dialog-content">
+      <form #folderForm="ngForm" (ngSubmit)="createFolder()">
+        <div class="field">
+          <label class="label">Folder Name</label>
+          <input type="text" class="input" name="folder_name" placeholder="Folder Name" required [(ngModel)]="folderName">
+        </div>
+        <div class="buttons-field">
+          <button type="button" class="button is-gray" [disabled]="loading" (click)="dataService.createFolderDialog = false;">Cancel</button>
+          <button type="submit" class="button is-gray" [disabled]="!folderForm.valid || loading">
+            <span *ngIf="!loading">Save</span>
+            <span *ngIf="loading">Creating folder ...</span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

@@ -47,6 +47,7 @@ export class BrowseComponent implements OnInit, OnDestroy {
         distinctUntilChanged()
       )
       .subscribe(path => {
+        this.selectedItems = [];
         this.path = path;
         this.paths = this.path
           .split('/')
@@ -72,7 +73,11 @@ export class BrowseComponent implements OnInit, OnDestroy {
     }
   }
 
-  changePath(name: string): void {
+  changePath(ev: MouseEvent, name: string): void {
+    if (ev.metaKey) {
+      return;
+    }
+
     const parentRoot: ActivatedRoute = this.router.routerState.root.firstChild;
     if (parentRoot.snapshot.url.map(p => p.path).join('/') === 'browse') {
       const childRoute: ActivatedRoute = parentRoot.firstChild;

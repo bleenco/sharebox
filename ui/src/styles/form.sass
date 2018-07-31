@@ -1,0 +1,76 @@
+@import 'colours'
+@import 'typography'
+
+.field
+  display: inline-block
+  width: 100%
+  max-width: 100%
+
+  &:not(:last-child)
+    margin-bottom: 15px
+
+  &.is-grouped
+    display: flex
+    justify-content: flex-start
+
+    & > .control
+      flex-grow: 1
+      flex-shrink: 1
+
+      &:not(:last-child)
+        margin-bottom: 0
+        margin-right: 15px
+
+      &.is-expanded
+        flex-grow: 1
+        flex-shrink: 1
+
+.label
+  display: block
+  color: $text-primary
+  font-size: 14px
+  font-family: $font-family-regular
+  margin: 5px 0
+
+.input
+  border: 1px solid $border-secondary
+  background: transparent
+  font-size: 14px
+  padding: 10px 15px
+  outline: none
+  color: $text-secondary
+  font-family: $font-family-regular
+  clear: both
+  max-width: 100%
+  width: 100%
+  resize: none
+  border-radius: 4px
+
+  &::placeholder
+    color: $text-primary
+    opacity: 1
+
+  &::-ms-input-placeholder
+    color: $text-primary
+
+  &:focus
+    border-color: $border-primary
+
+textarea
+
+  &.input
+    height: 150px
+
+.buttons-field
+  display: flex
+  justify-content: flex-end
+  width: 100%
+  margin: 5px 0
+
+  .button
+    margin-left: 10px
+
+.form-notification
+  display: inline-block
+  width: 100%
+  margin: 0 0 10px 0

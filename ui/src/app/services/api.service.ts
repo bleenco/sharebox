@@ -42,6 +42,15 @@ export class ApiService {
     link.dispatchEvent(ev);
   }
 
+  createFolder(filePath: string): Observable<any> {
+    const url = `${this.urlPrefix}/files/folder/create`;
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    return this.http.post(url, { filePath }, { headers })
+      .pipe(
+        catchError(this.handleError('files/delete'))
+      );
+  }
+
   delete(paths: string[]): Observable<any> {
     const url = `${this.urlPrefix}/files/delete`;
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
