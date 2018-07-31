@@ -103,7 +103,7 @@ func CreateFolderHandler(w http.ResponseWriter, r *http.Request, ps httprouter.P
 		fmt.Println(err)
 	}
 
-	folderName := form.FilePath
+	folderName := strings.Replace(form.FilePath, "..", "", -1)
 	folderPath := path.Clean(root + "/" + folderName)
 
 	if fileExists(folderPath) {
