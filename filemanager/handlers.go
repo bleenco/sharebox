@@ -48,19 +48,33 @@ func UploadHandler(w http.ResponseWriter, r *http.Request, ps httprouter.Params)
 		w.WriteHeader(http.StatusInternalServerError)
 	}
 
-	path := root + "/" + r.FormValue("Dirpath")
+	path := root + "/" + r.FormValue("dirpath")
 
-	infile, header, err := r.FormFile("uploadfile")
+	infile, header, err := r.FormFile("file")
 	if err != nil {
 		http.Error(w, "Error parsing upload file: "+err.Error(), http.StatusBadRequest)
 		return
 	}
 
-	outfile, err := os.Create(path + "/" + header.Filename)
+	fileName := header.Filename
+	filePath := path + "/" + fileName
+
+	if fileExists(filePath) {
+		for ok := true; ok; ok = fileExists(filePath) {
+			extension := filepath.Ext(header.Filename)
+			filenameWithoutExt := fileName[0 : len(fileName)-len(extension)]
+			fileName = filenameWithoutExt + "-" + buildFileName() + extension
+			filePath = path + "/" + fileName
+		}
+	}
+
+	outfile, err := os.Create(filePath)
 	if err != nil {
 		http.Error(w, "Error saving file: "+err.Error(), http.StatusBadRequest)
 		return
 	}
+
+	defer outfile.Close()
 
 	_, err = io.Copy(outfile, infile)
 	if err != nil {

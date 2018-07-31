@@ -13,6 +13,7 @@
   cursor: pointer
   transition: all 100ms ease
   background: $white
+  margin-left: 5px
 
   &:hover, &.is-active
     border-color: $blue
@@ -32,6 +33,14 @@
     &:hover, &.is-active
       background: $blue
       color: $white
+
+    &.is-inverted
+      color: $white
+      background: $blue
+
+      &:hover, &.is-active
+        background: $white
+        color: $blue
 
   &.is-green
     color: $green

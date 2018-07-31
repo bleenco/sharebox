@@ -5,7 +5,7 @@
 .selectbox-container
   display: flex
   align-items: center
-  width: 120px
+  width: 100px
   height: 30px
   font-size: 12px
   position: relative
@@ -19,16 +19,18 @@
     width: 12px
     height: auto
     position: absolute
-    right: 10px
+    right: 6px
     top: 11px
 
   .selectbox-value
-    width: 120px
+    width: 100px
     padding: 6px 13px
     font-size: 12px
     height: 30px
-    border: 1px solid $border-secondary
-    color: $text-primary
+    border-radius: 3px
+    border: 1px solid $blue
+    color: $white
+    background: $blue
     display: inline-flex
     align-items: center
     position: relative
@@ -43,14 +45,15 @@
     left: 0
     right: 0
     z-index: 9
+    border-radius: 3px
 
   .selectbox-options
     width: 100%
     background: $background
     border: 1px solid $border-secondary
     min-height: 30px
-    border-bottom-left-radius: 3px
-    border-bottom-right-radius: 3px
+    border-radius: 3px
+    box-shadow: 0 0 4px 0 rgba(0,0,0,0.10)
 
     .selectbox-option
       display: flex
@@ -60,6 +63,7 @@
       padding: 6px 13px
       position: relative
       justify-content: center
+      border-radius: 3px
 
       .check-icon
         position: absolute

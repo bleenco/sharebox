@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { ApiService } from './api.service';
 import { Subject, BehaviorSubject, Subscription } from 'rxjs';
-import { distinctUntilChanged, filter, mergeMap, map } from 'rxjs/operators';
+import { distinctUntilChanged, filter, flatMap, tap } from 'rxjs/operators';
 
 export interface FileInfo {
   filename: string;
@@ -66,6 +66,19 @@ export class DataService {
             this.fetching = false;
           });
       });
+  }
+
+  refresh(): void {
+    const sub = this.currentPath$
+      .pipe(
+        tap(() => this.fetching = true),
+        flatMap(path => this.apiService.getFiles(path.replace('/browse', '')))
+      )
+      .subscribe(files => {
+        this.fetching = false;
+        this.files$.next(files.data);
+        this.fetching = false;
+      }, err => console.error(err), () => sub.unsubscribe());
   }
 
   downloadFile(filePath: string): void {

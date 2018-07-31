@@ -5,7 +5,13 @@
         <a routerLink="/">
           <img src="/assets/images/sharebox-logo.svg" class="logo">
         </a>
-        <button type="button" class="button">Upload File</button>
+        <div class="upload-section">
+          <button type="button" class="button is-blue is-inverted" *ngIf="upload?.files?.length">{{ upload?.files.length }} files uploading</button>
+          <label class="button">
+            <input type="file" ngFileSelect [options]="upload?.options" (uploadOutput)="upload?.onUploadOutput($event)" [uploadInput]="upload?.uploadInput" multiple>
+            Upload File
+          </label>
+        </div>
       </div>
     </div>
   </div>

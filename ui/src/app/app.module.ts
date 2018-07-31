@@ -6,6 +6,8 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 
+import { NgxUploaderModule } from 'ngx-uploader';
+
 import { ApiService } from './services/api.service';
 import { DataService } from './services/data.service';
 
@@ -34,7 +36,8 @@ import { SelectboxComponent } from './widgets/selectbox/selectbox.component';
     CommonModule,
     FormsModule,
     HttpClientModule,
-    AppRoutingModule
+    AppRoutingModule,
+    NgxUploaderModule
   ],
   providers: [
     ApiService,

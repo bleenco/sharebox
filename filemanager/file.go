@@ -4,6 +4,7 @@ import (
 	"net/http"
 	"os"
 	"path/filepath"
+	"time"
 )
 
 // GetFileName returns filename from path
@@ -68,4 +69,15 @@ func getFileContentType(file *os.File) (string, error) {
 
 	contentType := http.DetectContentType(buffer)
 	return contentType, nil
+}
+
+func fileExists(filePath string) bool {
+	if _, err := os.Stat(filePath); err == nil {
+		return true
+	}
+	return false
+}
+
+func buildFileName() string {
+	return time.Now().Format("20060102150405")
 }

@@ -11,7 +11,6 @@ import (
 	"github.com/bleenco/sharebox/filemanager"
 	"github.com/bleenco/sharebox/vex"
 	"github.com/julienschmidt/httprouter"
-	"github.com/phyber/negroni-gzip/gzip"
 	"github.com/rs/cors"
 	"github.com/urfave/negroni"
 )
@@ -57,7 +56,6 @@ func main() {
 	n.Use(c)
 	n.Use(negroni.NewRecovery())
 	n.Use(negroni.NewLogger())
-	n.Use(gzip.Gzip(gzip.DefaultCompression))
 	n.UseHandler(router)
 
 	fmt.Printf("Serving files from %s at %s ...\n", *rootDir, *listenAddr)

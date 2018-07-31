@@ -14,19 +14,23 @@
               <span class="path-url-link">home</span>
             </div>
           </span>
+          <span *ngIf="!paths.length">
+            <span>/</span>
+            <span class="path-url-link">home</span>
+          </span>
         </div>
 
         <div class="actions-bar">
-          <button type="button" class="button is-small">
+          <button type="button" class="button is-small is-blue is-inverted">
             <span>Create Folder</span>
           </button>
-          <button type="button" class="button is-small">
+          <button type="button" class="button is-small is-blue is-inverted">
             <span>Download</span>
           </button>
-          <button type="button" class="button is-small">
+          <button type="button" class="button is-small is-blue is-inverted">
             <span>Move</span>
           </button>
-          <button type="button" class="button is-small">
+          <button type="button" class="button is-small is-blue is-inverted">
             <span>Copy</span>
           </button>
           <app-selectbox [values]="['Grid View', 'List View']" [(ngModel)]="view" name="view"></app-selectbox>
@@ -68,7 +72,7 @@
             <h1>Files</h1>
             <div class="columns is-multiline">
               <div class="column is-3" *ngFor="let file of files | filesFilter:showHidden">
-                <div class="file-item">
+                <div class="file-item" (click)="dataService?.downloadFile(file.filepath)">
                   <div class="file-item-icon">
                     <span class="icon-file">
                       <span>{{ file.ext }}</span>

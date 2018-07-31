@@ -10,7 +10,7 @@ export class ApiService {
   urlPrefix: string;
 
   constructor(public http: HttpClient) {
-    this.urlPrefix = this.getURL();
+    this.urlPrefix = getURL();
   }
 
   getFiles(path: string): Observable<any> {
@@ -23,6 +23,12 @@ export class ApiService {
 
   downloadFile(path: string): void {
     const url = `${this.urlPrefix}/files/download/${path}`;
+    const link = document.createElement('a');
+    link.href = url;
+    link.target = '_blank';
+    const ev = document.createEvent('MouseEvents');
+    ev.initEvent('click', false, true);
+    link.dispatchEvent(ev);
   }
 
   delete(paths: string[]): Observable<any> {
@@ -41,10 +47,10 @@ export class ApiService {
       return of(result as T);
     };
   }
+}
 
-  private getURL(): string {
-    const secure = location.protocol === 'https:' ? true : false;
-    const port = location.port === '4200' || location.port === '4505' ? '4505' : location.port;
-    return secure ? `https://${location.hostname}:${port}/api` : `http://${location.hostname}:${port}/api`;
-  }
+export function getURL(): string {
+  const secure = location.protocol === 'https:' ? true : false;
+  const port = location.port === '4200' || location.port === '4505' ? '4505' : location.port;
+  return secure ? `https://${location.hostname}:${port}/api` : `http://${location.hostname}:${port}/api`;
 }
