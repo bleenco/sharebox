@@ -1,0 +1,20 @@
+<div class="dialog-overlay">
+    <div class="dialog-container is-wide">
+      <div class="dialog-header">
+        <h1>Copy items</h1>
+        <img src="/assets/images/close-icon.svg" class="close-icon" (click)="dataService.copyDialog = false;">
+      </div>
+      <div class="dialog-content">
+        <p>Select folder to copy {{ dataService?.selectedItems?.length }} item/s to.</p>
+        <p class="is-wrapped">{{ currentPath.split('/').join(' / ') || '/' }}</p>
+        <app-embedded-explorer [currentPath]="currentPath" (selectedPath)="selectedPath($event)"></app-embedded-explorer>
+        <div class="buttons-field has-margin-top">
+          <button type="button" class="button is-gray" (click)="dataService.copyDialog = false;">Cancel</button>
+          <button type="button" class="button is-gray" (click)="copy()">
+            <span *ngIf="!loading">Copy</span>
+            <span *ngIf="loading">Copying ...</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>

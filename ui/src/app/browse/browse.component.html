@@ -30,7 +30,7 @@
           <button type="button" class="button is-small is-gray" [disabled]="!dataService.selectedItems?.length">
             <span>Move</span>
           </button>
-          <button type="button" class="button is-small is-gray" [disabled]="!dataService.selectedItems?.length">
+          <button type="button" class="button is-small is-gray" [disabled]="!dataService.selectedItems?.length" (click)="dataService.copyDialog = true;">
             <span>Copy</span>
           </button>
           <button type="button" class="button is-small is-gray" [disabled]="!dataService.selectedItems?.length" (click)="dataService.deleteDialog = true;">
@@ -157,3 +157,4 @@
 
 <app-create-folder-dialog *ngIf="dataService?.createFolderDialog"></app-create-folder-dialog>
 <app-delete-dialog *ngIf="dataService?.deleteDialog"></app-delete-dialog>
+<app-copy-dialog *ngIf="dataService?.copyDialog"></app-copy-dialog>

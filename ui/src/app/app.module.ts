@@ -22,6 +22,8 @@ import { LoaderComponent } from './loader/loader.component';
 import { SelectboxComponent } from './widgets/selectbox/selectbox.component';
 import { CreateFolderDialogComponent } from './dialogs/create-folder-dialog/create-folder-dialog.component';
 import { DeleteDialogComponent } from './dialogs/delete-dialog/delete-dialog.component';
+import { CopyDialogComponent } from './dialogs/copy-dialog/copy-dialog.component';
+import { EmbeddedExplorerComponent } from './embedded-explorer/embedded-explorer.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +36,9 @@ import { DeleteDialogComponent } from './dialogs/delete-dialog/delete-dialog.com
     LoaderComponent,
     SelectboxComponent,
     CreateFolderDialogComponent,
-    DeleteDialogComponent
+    DeleteDialogComponent,
+    CopyDialogComponent,
+    EmbeddedExplorerComponent
   ],
   imports: [
     BrowserModule,

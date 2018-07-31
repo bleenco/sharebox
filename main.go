@@ -45,6 +45,7 @@ func main() {
 	router.POST("/api/files/upload", filemanager.UploadHandler)
 	router.POST("/api/files/delete", filemanager.DeleteHandler)
 	router.POST("/api/files/folder/create", filemanager.CreateFolderHandler)
+	router.POST("/api/files/copy", filemanager.CopyHandler)
 
 	router.NotFound = http.FileServer(&AssetFS{
 		Asset:     Asset,

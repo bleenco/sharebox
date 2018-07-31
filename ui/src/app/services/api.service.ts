@@ -61,6 +61,16 @@ export class ApiService {
       );
   }
 
+  copy(destination: string, paths: string[]): Observable<any> {
+    const url = `${this.urlPrefix}/files/copy`;
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    const body = { destination, paths };
+    return this.http.post(url, body, { headers })
+      .pipe(
+        catchError(this.handleError('files/delete'))
+      );
+  }
+
   private handleError<T>(operation = 'operation', result?: T) {
     return (error: any): Observable<T> => {
       console.error(error);

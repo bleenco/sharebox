@@ -102,6 +102,7 @@ func CreateFolderHandler(w http.ResponseWriter, r *http.Request, ps httprouter.P
 	if err := decoder.Decode(&form); err != nil {
 		fmt.Println(err)
 	}
+	defer r.Body.Close()
 
 	folderName := strings.Replace(form.FilePath, "..", "", -1)
 	folderPath := path.Clean(root + "/" + folderName)
@@ -191,6 +192,34 @@ func DeleteHandler(w http.ResponseWriter, r *http.Request, ps httprouter.Params)
 		err = os.RemoveAll(fullPath)
 		if err != nil {
 			panic(err)
+		}
+	}
+
+	data := JSONResponse{Status: http.StatusOK, Data: "ok"}
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(data)
+}
+
+// CopyHandler accepts destination and array of paths to be copied
+func CopyHandler(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
+	type copyType struct {
+		Destination string   `json:"destination"`
+		Paths       []string `json:"paths"`
+	}
+	decoder := json.NewDecoder(r.Body)
+	var form copyType
+	if err := decoder.Decode(&form); err != nil {
+		fmt.Println(err)
+	}
+	defer r.Body.Close()
+
+	dest := path.Clean(root + "/" + form.Destination)
+	for _, fileSrc := range form.Paths {
+		fullSrcPath := path.Clean(root + "/" + fileSrc)
+		fileName := filepath.Base(fileSrc)
+		fileDest := filepath.Join(dest, fileName)
+		if err := Copy(fullSrcPath, fileDest); err != nil {
+			fmt.Println(err)
 		}
 	}
 

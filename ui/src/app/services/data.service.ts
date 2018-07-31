@@ -33,6 +33,7 @@ export class DataService {
   fetching: boolean;
   createFolderDialog: boolean;
   deleteDialog: boolean;
+  copyDialog: boolean;
 
   constructor(public apiService: ApiService, public router: Router) {
     this.currentPath$ = new BehaviorSubject<string>('init');
@@ -100,5 +101,9 @@ export class DataService {
 
   delete(filePaths: string[]): Observable<any> {
     return this.apiService.delete(filePaths);
+  }
+
+  copy(destination: string, filePaths: string[]): Observable<any> {
+    return this.apiService.copy(destination, filePaths);
   }
 }

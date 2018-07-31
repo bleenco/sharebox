@@ -1,0 +1,26 @@
+<div class="embedded-explorer-container">
+  <div *ngIf="!loading">
+    <div class="list-item" *ngIf="currentPath !== '/'" (click)="changePath('..')">
+      <div class="columns is-paddingless is-marginless">
+        <div class="column is-12">
+          <span class="list-item-icon-container">
+            <img src="/assets/images/folder-icon.svg" class="list-item-icon">
+          </span>
+          <span>..</span>
+        </div>
+      </div>
+    </div>
+    <div class="list-item" *ngFor="let folder of folders" (click)="changePath(folder.filename)">
+      <div class="columns is-paddingless is-marginless">
+        <div class="column is-12">
+          <span>
+            <img src="/assets/images/folder-icon.svg" class="list-item-icon">
+          </span>
+          <span class="folder-name">{{ folder.filename }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <app-loader *ngIf="loading"></app-loader>
+</div>

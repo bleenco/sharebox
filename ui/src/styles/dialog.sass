@@ -19,6 +19,9 @@
     border: 1px solid $border-secondary
     display: block
 
+    &.is-wide
+      width: 700px
+
     .dialog-header
       padding: 15px 20px
       display: flex
@@ -56,6 +59,11 @@
 
         &.is-bold
           font-family: $font-family-medium
+
+        &.is-wrapped
+          overflow-wrap: break-word
+          padding: 0 0 15px
+          line-height: 26px
 
     .dialog-form
       display: inline-block
