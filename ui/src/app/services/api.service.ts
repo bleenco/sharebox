@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
@@ -23,6 +23,17 @@ export class ApiService {
 
   downloadFile(path: string): void {
     const url = `${this.urlPrefix}/files/download/${path}`;
+    const link = document.createElement('a');
+    link.download = '';
+    link.href = url;
+    const ev = document.createEvent('MouseEvents');
+    ev.initEvent('click', false, true);
+    link.dispatchEvent(ev);
+  }
+
+  downloadZipArchive(paths: string[]): void {
+    const params = new HttpParams({ fromObject: { filePath: paths } }).toString();
+    const url = `${this.urlPrefix}/files/download-zip?${params}`;
     const link = document.createElement('a');
     link.download = '';
     link.href = url;

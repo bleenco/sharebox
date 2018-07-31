@@ -24,7 +24,7 @@
           <button type="button" class="button is-small is-gray" *ngIf="selectedItems?.length" (click)="downloadFiles($event)">
             <span>Download</span>
           </button>
-          <button type="button" class="button is-small is-gray" *ngIf="selectedItems?.length">
+          <button type="button" class="button is-small is-gray" *ngIf="selectedItems?.length" (click)="downloadZip($event)">
             <span>Download ZIP</span>
           </button>
           <button type="button" class="button is-small is-gray" *ngIf="selectedItems?.length">

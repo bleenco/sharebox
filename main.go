@@ -41,6 +41,7 @@ func main() {
 
 	router.GET("/api/files/browse/*filepath", filemanager.BrowseHandler)
 	router.GET("/api/files/download/*filepath", filemanager.DownloadHandler)
+	router.GET("/api/files/download-zip", filemanager.DownloadZipHandler)
 	router.POST("/api/files/upload", filemanager.UploadHandler)
 	router.POST("/api/files/delete", filemanager.DeleteHandler)
 

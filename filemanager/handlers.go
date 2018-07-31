@@ -3,10 +3,13 @@ package filemanager
 import (
 	"bytes"
 	"encoding/json"
+	"fmt"
 	"io"
 	"io/ioutil"
 	"net/http"
+	"net/url"
 	"os"
+	"path"
 	"path/filepath"
 	"strconv"
 	"strings"
@@ -52,6 +55,41 @@ func DownloadHandler(w http.ResponseWriter, r *http.Request, ps httprouter.Param
 	w.Header().Set("Content-Control", "private, no-transform, no-store, must-revalidate")
 
 	http.ServeContent(w, r, path, time.Now(), bytes.NewReader(downloadBytes))
+}
+
+// DownloadZipHandler creates temporary .zip archive file and sends its contents to response writer
+func DownloadZipHandler(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
+	pquery, err := url.ParseQuery(r.URL.RawQuery)
+	if err != nil {
+		fmt.Println(err)
+	}
+	filePaths := make([]string, len(pquery["filePath"]))
+	for i, filePath := range pquery["filePath"] {
+		filePaths[i] = path.Clean(root + "/" + filePath)
+	}
+
+	zipFile, err := ioutil.TempFile("", "archive-sharebox-")
+	if err != nil {
+		fmt.Println(err)
+	}
+	defer os.Remove(zipFile.Name())
+
+	if err := zipIt(filePaths, zipFile); err != nil {
+		fmt.Println(err)
+	}
+
+	downloadBytes, _ := ioutil.ReadFile(zipFile.Name())
+	mime := http.DetectContentType(downloadBytes)
+	fileSize := len(string(downloadBytes))
+
+	w.Header().Set("Content-Type", mime)
+	w.Header().Set("Content-Disposition", "attachment; filename="+filepath.Base(zipFile.Name())+".zip")
+	w.Header().Set("Expires", "0")
+	w.Header().Set("Content-Transfer-Encoding", "binary")
+	w.Header().Set("Content-Length", strconv.Itoa(fileSize))
+	w.Header().Set("Content-Control", "private, no-transform, no-store, must-revalidate")
+
+	http.ServeContent(w, r, zipFile.Name(), time.Now(), bytes.NewReader(downloadBytes))
 }
 
 // UploadHandler reads a file from HTTP request and save it to disk

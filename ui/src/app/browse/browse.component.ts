@@ -102,4 +102,10 @@ export class BrowseComponent implements OnInit, OnDestroy {
         sub.unsubscribe();
       });
   }
+
+  downloadZip(ev: MouseEvent): void {
+    ev.stopPropagation();
+    const filePaths = this.selectedItems.map(item => item.filepath);
+    this.dataService.downloadZipArchive(filePaths);
+  }
 }

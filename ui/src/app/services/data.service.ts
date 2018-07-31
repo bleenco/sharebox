@@ -84,4 +84,8 @@ export class DataService {
   downloadFile(filePath: string): void {
     this.apiService.downloadFile(filePath);
   }
+
+  downloadZipArchive(filePaths: string[]): void {
+    this.apiService.downloadZipArchive(filePaths);
+  }
 }
