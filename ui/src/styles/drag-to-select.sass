@@ -1,0 +1,35 @@
+$select-box-color: $blue !default
+$select-box-border-size: 2px !default
+
+$selected-item-border: true !default
+$selected-item-border-color: $blue !default
+$selected-item-border-size: 1px !default
+
+$box-shadow: false !default
+
+.dts-no-select
+  user-select: none
+
+.dts-select-box
+  contain: layout
+  transform: translateZ(0)
+  box-sizing: border-box
+  color: $select-box-color
+  background: rgba($select-box-color, 0.3)
+  border: $select-box-border-size solid currentColor
+  position: absolute
+  left: 0
+  top: 0
+  width: 0
+  height: 0
+  pointer-events: none
+  opacity: 0
+  z-index: 1
+
+.dts-select-container:not(.dts-custom)
+  .dts-select-item.selected
+    @if $selected-item-border
+      border: $selected-item-border-size solid $selected-item-border-color
+
+    @if $box-shadow
+      box-shadow: $shadow-primary

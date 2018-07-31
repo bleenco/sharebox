@@ -22,6 +22,7 @@
     "@angular/router": "^6.1.0",
     "bulma": "^0.7.1",
     "core-js": "^2.5.7",
+    "ngx-drag-to-select": "^2.0.0",
     "ngx-uploader": "^6.0.1",
     "rxjs": "^6.2.2",
     "zone.js": "^0.8.26"
