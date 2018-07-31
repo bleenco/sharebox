@@ -3,8 +3,8 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { DataService, FileInfo } from '../services/data.service';
 import { FilesFilterPipe } from '../pipes/files-filter.pipe';
 import { FoldersFilterPipe } from '../pipes/folders-filter.pipe';
-import { Subscription } from 'rxjs';
-import { distinctUntilChanged } from 'rxjs/operators';
+import { Subscription, of, from } from 'rxjs';
+import { distinctUntilChanged, filter, delay, concatMap } from 'rxjs/operators';
 
 interface PathType {
   title: string;
@@ -25,6 +25,7 @@ export class BrowseComponent implements OnInit, OnDestroy {
   currentPathSub: Subscription;
   foldersLen: number;
   filesLen: number;
+  selectedItems: FileInfo[] = [];
   view: 'Grid View' | 'List View' = 'Grid View';
 
   constructor(
@@ -84,5 +85,21 @@ export class BrowseComponent implements OnInit, OnDestroy {
 
   changeAbsolutePath(pathIndex: number): void {
     this.dataService.currentPath$.next(this.paths[pathIndex].path.substr(1));
+  }
+
+  onSelect(items: FileInfo[]): void { }
+
+  downloadFiles(ev: MouseEvent): void {
+    ev.stopPropagation();
+    const sub = from(this.selectedItems)
+      .pipe(
+        filter(item => !item.stat.isdir),
+        concatMap(item => of(item).pipe(delay(1000)))
+      )
+      .subscribe(item => {
+        this.dataService.downloadFile(item.filepath);
+      }, err => console.error(err), () => {
+        sub.unsubscribe();
+      });
   }
 }

@@ -21,17 +21,20 @@
         </div>
 
         <div class="actions-bar">
-          <button type="button" class="button is-small is-blue is-inverted">
-            <span>Create Folder</span>
-          </button>
-          <button type="button" class="button is-small is-blue is-inverted">
+          <button type="button" class="button is-small is-gray" *ngIf="selectedItems?.length" (click)="downloadFiles($event)">
             <span>Download</span>
           </button>
-          <button type="button" class="button is-small is-blue is-inverted">
+          <button type="button" class="button is-small is-gray" *ngIf="selectedItems?.length">
+            <span>Download ZIP</span>
+          </button>
+          <button type="button" class="button is-small is-gray" *ngIf="selectedItems?.length">
             <span>Move</span>
           </button>
-          <button type="button" class="button is-small is-blue is-inverted">
+          <button type="button" class="button is-small is-gray" *ngIf="selectedItems?.length">
             <span>Copy</span>
+          </button>
+          <button type="button" class="button is-small is-gray">
+            <span>Create Folder</span>
           </button>
           <app-selectbox [values]="['Grid View', 'List View']" [(ngModel)]="view" name="view"></app-selectbox>
         </div>
@@ -43,97 +46,101 @@
         </div>
 
         <div class="content" *ngIf="!dataService.fetching && view === 'Grid View'">
-          <div class="content-section" *ngIf="foldersLen || paths.length > 1">
-            <h1>Folders</h1>
-            <div class="columns is-multiline">
-              <div class="column is-3" *ngIf="paths.length > 1">
-                <div class="folder-item" (click)="changeAbsolutePath(paths.length - 2)">
-                  <div class="folder-item-icon">
-                    <span class="icon-folder"></span>
-                  </div>
-                  <div class="folder-item-text">
-                    <span>..</span>
-                  </div>
-                </div>
-              </div>
-              <div class="column is-3" *ngFor="let folder of files | foldersFilter:showHidden">
-                <div class="folder-item" (click)="changePath(folder.filename)">
-                  <div class="folder-item-icon">
-                    <span class="icon-folder"></span>
-                  </div>
-                  <div class="folder-item-text">
-                    <span>{{ folder.filename }}</span>
+          <dts-select-container #container="dts-select-container" [(selectedItems)]="selectedItems" (select)="onSelect($event)">
+            <div class="content-section" *ngIf="foldersLen || paths.length > 1">
+              <h1>Folders</h1>
+              <div class="columns is-multiline">
+                <div class="column is-3" *ngIf="paths.length > 1">
+                  <div class="folder-item" (click)="changeAbsolutePath(paths.length - 2)">
+                    <div class="folder-item-icon">
+                      <span class="icon-folder"></span>
+                    </div>
+                    <div class="folder-item-text">
+                      <span>..</span>
+                    </div>
                   </div>
                 </div>
-              </div>
-            </div>
-          </div>
-          <div class="content-section" *ngIf="filesLen">
-            <h1>Files</h1>
-            <div class="columns is-multiline">
-              <div class="column is-3" *ngFor="let file of files | filesFilter:showHidden">
-                <div class="file-item" (click)="dataService?.downloadFile(file.filepath)">
-                  <div class="file-item-icon">
-                    <span class="icon-file">
-                      <span>{{ file.ext }}</span>
-                    </span>
-                  </div>
-                  <div class="file-item-text">
-                    <div class="file-item-text-content">
-                      <span class="filename">{{ file.filename }}</span>
-                      <span class="filetime">{{ file.stat.size | fileSize }}</span>
+                <div class="column is-3" *ngFor="let folder of files | foldersFilter:showHidden">
+                  <div class="folder-item" (click)="changePath(folder.filename)" [dtsSelectItem]="folder">
+                    <div class="folder-item-icon">
+                      <span class="icon-folder"></span>
+                    </div>
+                    <div class="folder-item-text">
+                      <span>{{ folder.filename }}</span>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
+            <div class="content-section" *ngIf="filesLen">
+              <h1>Files</h1>
+              <div class="columns is-multiline">
+                <div class="column is-3" *ngFor="let file of files | filesFilter:showHidden">
+                  <div class="file-item" [dtsSelectItem]="file">
+                    <div class="file-item-icon">
+                      <span class="icon-file">
+                        <span>{{ file.ext }}</span>
+                      </span>
+                    </div>
+                    <div class="file-item-text">
+                      <div class="file-item-text-content">
+                        <span class="filename">{{ file.filename }}</span>
+                        <span class="filetime">{{ file.stat.size | fileSize }}</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </dts-select-container>
           <div class="content-section" *ngIf="!foldersLen && !filesLen">
             <h1 class="has-text-centered">Empty folder.</h1>
           </div>
         </div>
 
         <div class="content" *ngIf="!dataService.fetching && view === 'List View'">
-          <div class="content-section less-margin" *ngIf="foldersLen || paths.length > 1">
-            <div class="list-item" *ngIf="paths.length > 1" (click)="changeAbsolutePath(paths.length - 2)">
-              <div class="columns is-paddingless is-marginless">
-                <div class="column is-12">
-                  <span class="list-item-icon-container">
-                    <img src="/assets/images/folder-icon.svg" class="list-item-icon">
-                  </span>
-                  <span>..</span>
+          <dts-select-container #container="dts-select-container" [(selectedItems)]="selectedItems" (select)="onSelect($event)">
+            <div class="content-section less-margin" *ngIf="foldersLen || paths.length > 1">
+              <div class="list-item" *ngIf="paths.length > 1" (click)="changeAbsolutePath(paths.length - 2)">
+                <div class="columns is-paddingless is-marginless">
+                  <div class="column is-12">
+                    <span class="list-item-icon-container">
+                      <img src="/assets/images/folder-icon.svg" class="list-item-icon">
+                    </span>
+                    <span>..</span>
+                  </div>
+                </div>
+              </div>
+              <div class="list-item" *ngFor="let folder of files | foldersFilter:showHidden" (click)="changePath(folder.filename)" [dtsSelectItem]="folder">
+                <div class="columns is-paddingless is-marginless">
+                  <div class="column is-12">
+                    <span>
+                      <img src="/assets/images/folder-icon.svg" class="list-item-icon">
+                    </span>
+                    <span>{{ folder.filename }}</span>
+                  </div>
                 </div>
               </div>
             </div>
-            <div class="list-item" *ngFor="let folder of files | foldersFilter:showHidden" (click)="changePath(folder.filename)">
-              <div class="columns is-paddingless is-marginless">
-                <div class="column is-12">
-                  <span>
-                    <img src="/assets/images/folder-icon.svg" class="list-item-icon">
-                  </span>
-                  <span>{{ folder.filename }}</span>
+            <div class="content-section less-margin" *ngIf="filesLen">
+              <div class="list-item" *ngFor="let file of files | filesFilter:showHidden" [dtsSelectItem]="file">
+                <div class="columns is-paddingless is-marginless">
+                  <div class="column is-10">
+                    <span class="list-item-icon-container">
+                      <img src="/assets/images/file-icon.svg" class="list-item-icon">
+                    </span>
+                    <span>{{ file.filename }}</span>
+                  </div>
+                  <div class="column is-1">
+                    {{ file.ext }}
+                  </div>
+                  <div class="column is-1">
+                    {{ file.stat.size | fileSize }}
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-          <div class="content-section less-margin" *ngIf="filesLen">
-            <div class="list-item" *ngFor="let file of files | filesFilter:showHidden">
-              <div class="columns is-paddingless is-marginless">
-                <div class="column is-10">
-                  <span class="list-item-icon-container">
-                    <img src="/assets/images/file-icon.svg" class="list-item-icon">
-                  </span>
-                  <span>{{ file.filename }}</span>
-                </div>
-                <div class="column is-1">
-                  {{ file.ext }}
-                </div>
-                <div class="column is-1">
-                  {{ file.stat.size | fileSize }}
-                </div>
-              </div>
-            </div>
-          </div>
+          </dts-select-container>
           <div class="content-section" *ngIf="!foldersLen && !filesLen">
             <h1 class="has-text-centered">Empty folder.</h1>
           </div>

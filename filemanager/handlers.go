@@ -1,13 +1,16 @@
 package filemanager
 
 import (
+	"bytes"
 	"encoding/json"
 	"io"
 	"io/ioutil"
 	"net/http"
 	"os"
 	"path/filepath"
+	"strconv"
 	"strings"
+	"time"
 
 	"github.com/julienschmidt/httprouter"
 )
@@ -37,8 +40,18 @@ func BrowseHandler(w http.ResponseWriter, r *http.Request, ps httprouter.Params)
 func DownloadHandler(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 	path := root + "/" + ps.ByName("filepath")
 
-	file, _ := ioutil.ReadFile(path)
-	w.Write(file)
+	downloadBytes, _ := ioutil.ReadFile(path)
+	mime := http.DetectContentType(downloadBytes)
+	fileSize := len(string(downloadBytes))
+
+	w.Header().Set("Content-Type", mime)
+	w.Header().Set("Content-Disposition", "attachment; filename="+filepath.Base(path)+"")
+	w.Header().Set("Expires", "0")
+	w.Header().Set("Content-Transfer-Encoding", "binary")
+	w.Header().Set("Content-Length", strconv.Itoa(fileSize))
+	w.Header().Set("Content-Control", "private, no-transform, no-store, must-revalidate")
+
+	http.ServeContent(w, r, path, time.Now(), bytes.NewReader(downloadBytes))
 }
 
 // UploadHandler reads a file from HTTP request and save it to disk
