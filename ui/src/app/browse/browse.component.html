@@ -21,17 +21,20 @@
         </div>
 
         <div class="actions-bar">
-          <button type="button" class="button is-small is-gray" *ngIf="selectedItems?.length" (click)="downloadFiles($event)">
+          <button type="button" class="button is-small is-gray" [disabled]="!dataService.selectedItems?.length" (click)="downloadFiles($event)">
             <span>Download</span>
           </button>
-          <button type="button" class="button is-small is-gray" *ngIf="selectedItems?.length" (click)="downloadZip($event)">
+          <button type="button" class="button is-small is-gray" [disabled]="!dataService.selectedItems?.length" (click)="downloadZip($event)">
             <span>Download ZIP</span>
           </button>
-          <button type="button" class="button is-small is-gray" *ngIf="selectedItems?.length">
+          <button type="button" class="button is-small is-gray" [disabled]="!dataService.selectedItems?.length">
             <span>Move</span>
           </button>
-          <button type="button" class="button is-small is-gray" *ngIf="selectedItems?.length">
+          <button type="button" class="button is-small is-gray" [disabled]="!dataService.selectedItems?.length">
             <span>Copy</span>
+          </button>
+          <button type="button" class="button is-small is-gray" [disabled]="!dataService.selectedItems?.length" (click)="dataService.deleteDialog = true;">
+            <span>Delete</span>
           </button>
           <button type="button" class="button is-small is-gray" (click)="dataService.createFolderDialog = true;">
             <span>Create Folder</span>
@@ -46,7 +49,7 @@
         </div>
 
         <div class="content" *ngIf="!dataService.fetching && view === 'Grid View'">
-          <dts-select-container [(selectedItems)]="selectedItems" [selectMode]="false" [selectWithShortcut]="true" (select)="onSelect($event)">
+          <dts-select-container [(selectedItems)]="dataService.selectedItems" [selectMode]="false" [selectWithShortcut]="true" (select)="onSelect($event)">
             <div class="content-section" *ngIf="foldersLen || paths.length > 1">
               <h1>Folders</h1>
               <div class="columns is-multiline">
@@ -99,7 +102,7 @@
         </div>
 
         <div class="content" *ngIf="!dataService.fetching && view === 'List View'">
-          <dts-select-container #container="dts-select-container" [(selectedItems)]="selectedItems" (select)="onSelect($event)">
+          <dts-select-container #container="dts-select-container" [(selectedItems)]="dataService.selectedItems" (select)="onSelect($event)">
             <div class="content-section less-margin" *ngIf="foldersLen || paths.length > 1">
               <div class="list-item" *ngIf="paths.length > 1" (click)="changeAbsolutePath(paths.length - 2)">
                 <div class="columns is-paddingless is-marginless">
@@ -111,7 +114,8 @@
                   </div>
                 </div>
               </div>
-              <div class="list-item" *ngFor="let folder of files | foldersFilter:showHidden" (click)="changePath($event, folder.filename)" [dtsSelectItem]="folder">
+              <div class="list-item" *ngFor="let folder of files | foldersFilter:showHidden" (click)="changePath($event, folder.filename)"
+                [dtsSelectItem]="folder">
                 <div class="columns is-paddingless is-marginless">
                   <div class="column is-12">
                     <span>
@@ -152,3 +156,4 @@
 </div>
 
 <app-create-folder-dialog *ngIf="dataService?.createFolderDialog"></app-create-folder-dialog>
+<app-delete-dialog *ngIf="dataService?.deleteDialog"></app-delete-dialog>

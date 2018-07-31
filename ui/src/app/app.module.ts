@@ -21,6 +21,7 @@ import { FileSizePipe } from './pipes/file-size.pipe';
 import { LoaderComponent } from './loader/loader.component';
 import { SelectboxComponent } from './widgets/selectbox/selectbox.component';
 import { CreateFolderDialogComponent } from './dialogs/create-folder-dialog/create-folder-dialog.component';
+import { DeleteDialogComponent } from './dialogs/delete-dialog/delete-dialog.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import { CreateFolderDialogComponent } from './dialogs/create-folder-dialog/crea
     FileSizePipe,
     LoaderComponent,
     SelectboxComponent,
-    CreateFolderDialogComponent
+    CreateFolderDialogComponent,
+    DeleteDialogComponent
   ],
   imports: [
     BrowserModule,

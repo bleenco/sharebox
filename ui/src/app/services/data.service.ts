@@ -29,8 +29,10 @@ export class DataService {
   navigateSub: Subscription;
   filesSub: Subscription;
   files$: Subject<FileInfo[]>;
+  selectedItems: FileInfo[] = [];
   fetching: boolean;
   createFolderDialog: boolean;
+  deleteDialog: boolean;
 
   constructor(public apiService: ApiService, public router: Router) {
     this.currentPath$ = new BehaviorSubject<string>('init');
@@ -59,9 +61,12 @@ export class DataService {
           this.filesSub.unsubscribe();
         }
 
+        this.fetching = true;
+
+        this.selectedItems = [];
         this.currentPath = event.url.replace('/browse', '');
         this.currentPath$.next(event.url);
-        this.fetching = true;
+
         this.filesSub = this.apiService
           .getFiles(event.url.replace('/browse', ''))
           .subscribe(files => {
@@ -72,6 +77,7 @@ export class DataService {
   }
 
   refresh(): void {
+    this.selectedItems = [];
     this.fetching = true;
     this.apiService.getFiles(this.currentPath)
       .subscribe(files => {
@@ -90,5 +96,9 @@ export class DataService {
 
   createFolder(filePath: string): Observable<any> {
     return this.apiService.createFolder(filePath);
+  }
+
+  delete(filePaths: string[]): Observable<any> {
+    return this.apiService.delete(filePaths);
   }
 }

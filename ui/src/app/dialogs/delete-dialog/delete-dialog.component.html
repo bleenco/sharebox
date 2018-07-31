@@ -1,0 +1,19 @@
+<div class="dialog-overlay">
+  <div class="dialog-container">
+    <div class="dialog-header">
+      <h1>Are you sure?</h1>
+      <img src="/assets/images/close-icon.svg" class="close-icon" (click)="dataService.deleteDialog = false;">
+    </div>
+    <div class="dialog-content">
+      <p>Are you sure you want to delete selected files and folders ({{ dataService?.selectedItems?.length }}) permanently?</p>
+      <p class="is-bold">This cannot be reverted.</p>
+      <div class="buttons-field has-margin-top">
+        <button type="button" class="button" (click)="dataService.deleteDialog = false;">Cancel</button>
+        <button type="button" class="button is-red is-inverted" (click)="delete()">
+          <span *ngIf="!loading">Yes, delete all selected files and folders</span>
+          <span *ngIf="loading">Deleting ...</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -186,8 +186,8 @@ func DeleteHandler(w http.ResponseWriter, r *http.Request, ps httprouter.Params)
 	}
 	defer r.Body.Close()
 
-	for _, path := range reqData.Paths {
-		fullPath := root + "/" + path
+	for _, itemPath := range reqData.Paths {
+		fullPath := path.Clean(root + "/" + itemPath)
 		err = os.RemoveAll(fullPath)
 		if err != nil {
 			panic(err)

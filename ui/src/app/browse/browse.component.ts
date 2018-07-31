@@ -25,7 +25,6 @@ export class BrowseComponent implements OnInit, OnDestroy {
   currentPathSub: Subscription;
   foldersLen: number;
   filesLen: number;
-  selectedItems: FileInfo[] = [];
   view: 'Grid View' | 'List View' = 'Grid View';
 
   constructor(
@@ -47,7 +46,7 @@ export class BrowseComponent implements OnInit, OnDestroy {
         distinctUntilChanged()
       )
       .subscribe(path => {
-        this.selectedItems = [];
+        this.dataService.selectedItems = [];
         this.path = path;
         this.paths = this.path
           .split('/')
@@ -96,7 +95,7 @@ export class BrowseComponent implements OnInit, OnDestroy {
 
   downloadFiles(ev: MouseEvent): void {
     ev.stopPropagation();
-    const sub = from(this.selectedItems)
+    const sub = from(this.dataService.selectedItems)
       .pipe(
         filter(item => !item.stat.isdir),
         concatMap(item => of(item).pipe(delay(1000)))
@@ -110,7 +109,7 @@ export class BrowseComponent implements OnInit, OnDestroy {
 
   downloadZip(ev: MouseEvent): void {
     ev.stopPropagation();
-    const filePaths = this.selectedItems.map(item => item.filepath);
+    const filePaths = this.dataService.selectedItems.map(item => item.filepath);
     this.dataService.downloadZipArchive(filePaths);
   }
 }

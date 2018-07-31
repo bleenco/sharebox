@@ -55,7 +55,7 @@ export class ApiService {
     const url = `${this.urlPrefix}/files/delete`;
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     const body = { paths };
-    return this.http.post(url, body, { headers: headers })
+    return this.http.post(url, body, { headers })
       .pipe(
         catchError(this.handleError('files/delete'))
       );
