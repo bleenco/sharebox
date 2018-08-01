@@ -5,6 +5,10 @@ machine to local network or over the internet with minimal or zero configuration
 
 For sharing over the internet, it has included [vex](https://github.com/bleenco/vex) client, so you don't need to worry about firewall or NAT which is configured on your local network.
 
+<p align="center">
+  <img src="https://user-images.githubusercontent.com/1796022/43529504-bb6955a0-95ab-11e8-966e-cb445774abea.gif" alt="ShareBox">
+</p>
+
 ## Usage
 
 ### Sharing specific folder
